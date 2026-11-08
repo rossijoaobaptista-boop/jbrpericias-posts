@@ -10,3 +10,4 @@ aprovado_em: 2026-11-08
   Post id 421135272 · uuid 5413120567947840603
   https://app.metricool.com/planner/calendar?blogId=7968187&openWithPostUuid=5413120567947840603
 - Imagens servidas pelo GitHub (jbrpericias-posts) e conferidas byte a byte após importação.
+- 08/11/2026 19:19: slide 02 alterado ('manda o' -> 'solicita ao'). Novo post id 421141776 (uuid igual). Imagem conferida byte a byte.

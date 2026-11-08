@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Carrossel JBR · Quarta 11/11 · NR-1</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+  :root {
+    --navy: #1C3E5A; --navy-deep: #142D42; --soft: #DBE2E6; --paper: #FFFFFF;
+    --muted: #5A7184; --light-ink: #CBDBE6; --kicker-dark: #AFC9DA; --kicker-light: #4E7693;
+    --display: "Playfair Display", Georgia, serif;
+    --body: "Inter", "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #e9edf0; font-family: var(--body); }
+  h1, h2, .big { font-variant-numeric: lining-nums; }
+  .deck { display: flex; flex-wrap: wrap; gap: 40px; padding: 40px; }
+  .slide { position: relative; width: 1080px; height: 1350px; overflow: hidden; flex: none; }
+
+  .top { position: absolute; top: 72px; left: 90px; right: 90px; display: flex; align-items: center; justify-content: space-between; z-index: 3; }
+  .id { display: flex; align-items: center; gap: 22px; }
+  .id img { height: 64px; width: auto; display: block; }
+  .id .who { display: flex; flex-direction: column; gap: 4px; }
+  .id .name { font-size: 21px; font-weight: 600; letter-spacing: 0.02em; }
+  .id .crm { font-size: 16px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.7; }
+  .count { font-size: 18px; font-weight: 600; letter-spacing: 0.18em; font-variant-numeric: tabular-nums; opacity: 0.72; }
+  .handle { position: absolute; left: 90px; bottom: 64px; font-size: 19px; font-weight: 500; z-index: 3; }
+  .kicker { font-size: 18px; font-weight: 800; letter-spacing: 0.3em; text-transform: uppercase; }
+
+  /* ---------- capa: divisão vertical, texto à esquerda, foto à direita ---------- */
+  .cover { background: var(--navy); color: #F2F6F8; }
+  .cover .photo { position: absolute; top: 0; right: 0; bottom: 0; width: 470px;
+    background: url("../../../../brand/assets/photos/joao-5.png") 52% 20% / cover no-repeat; }
+  .cover .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(28,62,90,0.55) 0%, rgba(28,62,90,0) 35%); }
+  .cover .top { right: 520px; }
+  .cover .count { position: absolute; top: 72px; right: 40px; z-index: 4; color: #fff; opacity: 0.9; }
+  .cover .text { position: absolute; left: 90px; width: 470px; bottom: 150px; display: flex; flex-direction: column; gap: 24px; }
+  .cover .kicker { color: var(--kicker-dark); }
+  .cover h1 { font-family: var(--display); font-weight: 500; font-size: 84px; line-height: 1.0; letter-spacing: -0.015em; margin: 0; }
+  .cover .sub { font-size: 28px; line-height: 1.42; margin: 0; color: var(--light-ink); }
+  .cover .handle { color: var(--kicker-dark); }
+
+  /* ---------- cards ---------- */
+  .step { background: var(--navy); color: #F2F6F8; }
+  .card { position: absolute; left: 70px; right: 70px; top: 200px; bottom: 150px; background: var(--paper); color: var(--navy);
+    border-radius: 8px; padding: 84px 80px; display: flex; flex-direction: column; justify-content: center; gap: 34px; }
+  .card .kicker { color: var(--kicker-light); }
+  .card h2 { font-family: var(--display); font-weight: 500; font-size: 62px; line-height: 1.1; letter-spacing: -0.012em; margin: 0; }
+  .card .big { font-family: var(--display); font-weight: 500; font-size: 120px; line-height: 0.95; letter-spacing: -0.02em; margin: 0; }
+  .card .hl { background: linear-gradient(transparent 58%, var(--soft) 58%); padding: 0 4px; }
+  .card .comment { display: flex; gap: 30px; align-items: stretch; }
+  .card .comment .vr { width: 3px; background: var(--navy); opacity: 0.35; flex: none; }
+  .card .comment p { font-size: 29px; line-height: 1.55; color: var(--muted); margin: 0; }
+  .card ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 18px; }
+  .card li { font-size: 30px; line-height: 1.35; padding: 18px 26px; background: #F2F5F7; border-radius: 6px; }
+  .card .src { font-size: 19px; color: var(--muted); margin: 0; }
+  .step .handle { color: var(--kicker-dark); }
+  .step.soft { background: var(--soft); color: var(--navy); }
+  .step.soft .handle { color: var(--muted); }
+
+  /* ---------- encerramento ---------- */
+  .close { background: var(--paper); color: var(--navy); }
+  .close .inner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 120px; }
+  .close .logo { width: 560px; height: auto; display: block; }
+  .close .line { width: 120px; height: 2px; background: var(--soft); margin: 64px 0 52px; }
+  .close .n { font-family: var(--display); font-size: 46px; line-height: 1.1; }
+  .close .c { margin-top: 14px; font-size: 18px; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted); }
+  .close .area { margin-top: 30px; font-size: 25px; line-height: 1.5; color: var(--muted); }
+  .close .btn { margin-top: 52px; background: var(--navy); color: #fff; font-size: 19px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 20px 36px; border-radius: 4px; }
+  .close .handle { left: 0; right: 0; text-align: center; color: var(--muted); }
+  .close .count { position: absolute; top: 72px; right: 90px; color: var(--navy); }
+
+  body.render { background: #fff; }
+  body.render .deck { padding: 0; gap: 0; }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- 01 · CAPA -->
+  <section class="slide cover">
+    <div class="photo"></div>
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-dark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+    </div>
+    <span class="count">01 / 08</span>
+    <div class="text">
+      <span class="kicker">Perícia no Brasil</span>
+      <h1>NR-1: a saúde mental entrou no PGR</h1>
+      <p class="sub">O que mudou para empresas e trabalhadores desde maio de 2026.</p>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 02 · A MUDANÇA -->
+  <section class="slide step">
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-dark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+      <span class="count">02 / 08</span>
+    </div>
+    <div class="card">
+      <span class="kicker">A mudança</span>
+      <h2>Os <span class="hl">fatores de risco psicossociais</span> passaram a fazer parte da gestão de riscos da empresa</h2>
+      <div class="comment"><div class="vr"></div><p>A Portaria MTE nº 1.419/2024 alterou o capítulo 1.5 da NR-1, que trata do Gerenciamento de Riscos Ocupacionais.</p></div>
+      <p class="src">Fonte: Ministério do Trabalho e Emprego</p>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 03 · A DATA -->
+  <section class="slide step">
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-dark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+      <span class="count">03 / 08</span>
+    </div>
+    <div class="card">
+      <span class="kicker">Desde quando vale</span>
+      <p class="big">26 de maio de 2026</p>
+      <div class="comment"><div class="vr"></div><p>A data original foi prorrogada pela Portaria MTE nº 765/2025. Em março de 2026, a comissão tripartite manteve o prazo, apesar dos pedidos de novo adiamento.</p></div>
+      <p class="src">Fonte: MTE e Fundacentro</p>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 04 · FISCALIZAÇÃO -->
+  <section class="slide step">
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-dark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+      <span class="count">04 / 08</span>
+    </div>
+    <div class="card">
+      <span class="kicker">Fiscalização</span>
+      <h2>O período educativo <span class="hl">acabou</span></h2>
+      <div class="comment"><div class="vr"></div><p>O primeiro ano foi de orientação. Desde 26 de maio de 2026, a Inspeção do Trabalho pode autuar a empresa que não incluiu esses riscos na sua gestão.</p></div>
+      <p class="src">Fonte: Ministério do Trabalho e Emprego</p>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 05 · O QUE SÃO -->
+  <section class="slide step soft">
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-mark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+      <span class="count">05 / 08</span>
+    </div>
+    <div class="card">
+      <span class="kicker">Na prática</span>
+      <h2>Riscos psicossociais vêm da <span class="hl">organização do trabalho</span></h2>
+      <ul>
+        <li>Metas e demandas excessivas</li>
+        <li>Jornadas longas e sem pausa</li>
+        <li>Assédio e conflitos sem mediação</li>
+        <li>Pouca autonomia e pouco apoio</li>
+      </ul>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 06 · PARA A EMPRESA -->
+  <section class="slide step">
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-dark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+      <span class="count">06 / 08</span>
+    </div>
+    <div class="card">
+      <span class="kicker">Para a empresa</span>
+      <h2>Identificar, avaliar e <span class="hl">registrar</span> no PGR</h2>
+      <div class="comment"><div class="vr"></div><p>Esses riscos entram no inventário, com as medidas de prevenção e o plano de ação, como qualquer outro risco ocupacional.</p></div>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 07 · NA PERÍCIA -->
+  <section class="slide step">
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-dark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+      <span class="count">07 / 08</span>
+    </div>
+    <div class="card">
+      <span class="kicker">Na perícia</span>
+      <h2>O PGR pode virar <span class="hl">prova</span></h2>
+      <div class="comment"><div class="vr"></div><p>Em ações por burnout e outros transtornos mentais, a perícia avalia a relação entre a doença e o trabalho. O que está escrito no PGR, e o que falta nele, pode pesar nessa análise.</p></div>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 08 · ENCERRAMENTO -->
+  <section class="slide close">
+    <span class="count">08 / 08</span>
+    <div class="inner">
+      <img class="logo" src="../../../../brand/assets/logo.png" alt="JB Rossi Medicina &amp; Consultoria Pericial">
+      <div class="line"></div>
+      <span class="n">Dr. João Baptista Rossi</span>
+      <span class="c">CRM 91452/SP</span>
+      <p class="area">Doença ocupacional, burnout e análise de nexo causal<br>São Paulo e todo o Brasil</p>
+      <span class="btn">WhatsApp no link da bio</span>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+</div>
+<script>
+  if (location.search.indexOf('render') > -1) {
+    document.body.classList.add('render');
+    var n = parseInt((location.hash || '#0').slice(1), 10);
+    document.querySelectorAll('.slide').forEach(function (s, i) { if (i !== n) s.remove(); });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Carrossel JBR · Segunda 9/11 · v2</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+  :root {
+    --navy: #1C3E5A; --navy-deep: #142D42; --soft: #DBE2E6; --paper: #FFFFFF;
+    --muted: #5A7184; --light-ink: #CBDBE6; --kicker-dark: #AFC9DA;
+    --display: "Playfair Display", Georgia, serif;
+    --body: "Inter", "Segoe UI", system-ui, sans-serif;
+    --assets: "../../../../brand/assets";
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #e9edf0; font-family: var(--body); }
+  .deck { display: flex; flex-wrap: wrap; gap: 40px; padding: 40px; }
+  .slide { position: relative; width: 1080px; height: 1350px; overflow: hidden; flex: none; }
+
+  /* ---------- chrome ---------- */
+  .top { position: absolute; top: 72px; left: 90px; right: 90px; display: flex; align-items: center; justify-content: space-between; z-index: 3; }
+  .id { display: flex; align-items: center; gap: 22px; }
+  .id img { height: 64px; width: auto; display: block; }
+  .id .who { display: flex; flex-direction: column; gap: 4px; }
+  .id .name { font-size: 21px; font-weight: 600; letter-spacing: 0.02em; }
+  .id .crm { font-size: 16px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.7; }
+  .count { font-size: 18px; font-weight: 600; letter-spacing: 0.18em; font-variant-numeric: tabular-nums; opacity: 0.72; }
+  .handle { position: absolute; left: 90px; bottom: 64px; font-size: 19px; font-weight: 500; z-index: 3; }
+
+  /* ---------- capa ---------- */
+  .cover { background: var(--navy); color: #F2F6F8; }
+  .cover .photo { position: absolute; inset: 0 0 auto 0; height: 1000px;
+    background: url("../../../../brand/assets/photos/joao-2.png") center 18% / cover no-repeat; }
+  .cover .fade { position: absolute; inset: 0; background:
+      linear-gradient(rgba(28,62,90,0.38), rgba(28,62,90,0.38)),
+      linear-gradient(180deg, rgba(20,45,66,0.55) 0%, rgba(20,45,66,0) 22%, rgba(28,62,90,0) 42%, rgba(28,62,90,0.85) 62%, #1C3E5A 74%); }
+  .cover .text { position: absolute; left: 90px; right: 90px; bottom: 150px; display: flex; flex-direction: column; gap: 22px; z-index: 2; }
+  .kicker { font-size: 18px; font-weight: 800; letter-spacing: 0.3em; text-transform: uppercase; }
+  .cover .kicker { color: var(--kicker-dark); }
+  .cover h1 { font-family: var(--display); font-weight: 500; font-size: 104px; line-height: 0.98; letter-spacing: -0.015em; margin: 0; }
+  .cover .sub { font-size: 31px; line-height: 1.4; margin: 0; color: var(--light-ink); }
+  .cover .handle { color: var(--kicker-dark); }
+
+  /* ---------- passos ---------- */
+  .step { background: var(--navy); color: #F2F6F8; }
+  .card { position: absolute; left: 70px; right: 70px; top: 200px; bottom: 150px; background: var(--paper); color: var(--navy);
+    border-radius: 8px; padding: 84px 80px; display: flex; flex-direction: column; justify-content: center; gap: 34px; }
+  .card .num { font-family: var(--display); font-size: 150px; line-height: 0.8; color: var(--navy); opacity: 0.18; letter-spacing: -0.03em; }
+  .card h2 { font-family: var(--display); font-weight: 500; font-size: 66px; line-height: 1.08; letter-spacing: -0.012em; margin: 0; }
+  .card .hl { background: linear-gradient(transparent 58%, var(--soft) 58%); padding: 0 4px; }
+  .card .comment { display: flex; gap: 30px; align-items: stretch; }
+  .card .comment .vr { width: 3px; background: var(--navy); opacity: 0.35; flex: none; }
+  .card .comment p { font-size: 29px; line-height: 1.55; color: var(--muted); margin: 0; }
+  .step .handle { color: var(--kicker-dark); }
+
+  /* ---------- citação com foto ---------- */
+  .quote { background: var(--soft); color: var(--navy); }
+  .quote .portrait { position: absolute; left: 90px; top: 210px; width: 330px; height: 410px; border-radius: 8px;
+    background: url("../../../../brand/assets/photos/joao-5.png") center 22% / cover no-repeat; }
+  .quote .sig { position: absolute; left: 460px; top: 470px; display: flex; flex-direction: column; gap: 8px; }
+  .quote .sig .n { font-family: var(--display); font-size: 40px; line-height: 1.1; }
+  .quote .sig .c { font-size: 17px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+  .quote .sig .rule { width: 70px; height: 3px; background: var(--navy); opacity: 0.4; margin-bottom: 14px; }
+  .quote blockquote { position: absolute; left: 90px; right: 90px; top: 790px; margin: 0; font-family: var(--display); font-weight: 500;
+    font-size: 70px; line-height: 1.12; letter-spacing: -0.012em; }
+  .quote blockquote::before { content: "\201C"; position: absolute; left: -8px; top: -96px; font-size: 170px; opacity: 0.2; }
+  .quote .handle { color: var(--muted); }
+
+  /* ---------- encerramento ---------- */
+  .close { background: var(--paper); color: var(--navy); }
+  .close .inner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; text-align: center; padding: 0 120px; }
+  .close .logo { width: 560px; height: auto; display: block; }
+  .close .line { width: 120px; height: 2px; background: var(--soft); margin: 64px 0 52px; }
+  .close .n { font-family: var(--display); font-size: 46px; line-height: 1.1; }
+  .close .c { margin-top: 14px; font-size: 18px; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted); }
+  .close .area { margin-top: 30px; font-size: 25px; line-height: 1.5; color: var(--muted); }
+  .close .btn { margin-top: 52px; background: var(--navy); color: #fff; font-size: 19px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 20px 36px; border-radius: 4px; }
+  .close .handle { left: 0; right: 0; text-align: center; color: var(--muted); }
+  .close .count { position: absolute; top: 72px; right: 90px; color: var(--navy); }
+
+  /* modo render: um slide por vez, sem moldura */
+  body.render { background: #fff; }
+  body.render .deck { padding: 0; gap: 0; }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- 01 · CAPA -->
+  <section class="slide cover">
+    <div class="photo"></div>
+    <div class="fade"></div>
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-dark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+      <span class="count">01 / 07</span>
+    </div>
+    <div class="text">
+      <span class="kicker">Direitos na perícia</span>
+      <h1>Perícia marcada.<br>E agora?</h1>
+      <p class="sub">O que fazer nas duas semanas antes do exame.</p>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 02 -->
+  <section class="slide step">
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-dark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+      <span class="count">02 / 07</span>
+    </div>
+    <div class="card">
+      <span class="num">01</span>
+      <h2>Separe o <span class="hl">histórico</span>, não só o último atestado</h2>
+      <div class="comment"><div class="vr"></div><p>A perícia avalia a evolução da doença. Exames e consultas antigas são o que mostra quando a limitação começou.</p></div>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 03 -->
+  <section class="slide step">
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-dark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+      <span class="count">03 / 07</span>
+    </div>
+    <div class="card">
+      <span class="num">02</span>
+      <h2>Peça ao seu médico um <span class="hl">relatório</span>, não uma receita</h2>
+      <div class="comment"><div class="vr"></div><p>O relatório precisa dizer o diagnóstico, o CID, o tratamento em curso e o que você deixou de conseguir fazer.</p></div>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 04 -->
+  <section class="slide step">
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-dark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+      <span class="count">04 / 07</span>
+    </div>
+    <div class="card">
+      <span class="num">03</span>
+      <h2>Organize em <span class="hl">ordem de data</span></h2>
+      <div class="comment"><div class="vr"></div><p>Do documento mais antigo ao mais recente. O perito tem minutos para ler o que você levou anos para juntar.</p></div>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 05 -->
+  <section class="slide step">
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-dark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+      <span class="count">05 / 07</span>
+    </div>
+    <div class="card">
+      <span class="num">04</span>
+      <h2>Escreva o que <span class="hl">mudou na sua rotina</span></h2>
+      <div class="comment"><div class="vr"></div><p>Uma folha basta. Tarefas que você fazia e hoje não faz mais. Isso é incapacidade descrita em fatos, não em adjetivos.</p></div>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 06 · CITAÇÃO COM FOTO -->
+  <section class="slide quote">
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-mark.png" alt="">
+        <div class="who"><span class="name">JBR Perícias Médicas</span><span class="crm">Medicina &amp; Consultoria Pericial</span></div>
+      </div>
+      <span class="count">06 / 07</span>
+    </div>
+    <div class="portrait"></div>
+    <div class="sig">
+      <div class="rule"></div>
+      <span class="n">Dr. João<br>Baptista Rossi</span>
+      <span class="c">CRM 91452/SP</span>
+    </div>
+    <blockquote>Perícia não é sobre ter uma doença. É sobre demonstrar o quanto ela limita você.</blockquote>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 07 · ENCERRAMENTO COM LOGO OFICIAL -->
+  <section class="slide close">
+    <span class="count">07 / 07</span>
+    <div class="inner">
+      <img class="logo" src="../../../../brand/assets/logo.png" alt="JB Rossi Medicina &amp; Consultoria Pericial">
+      <div class="line"></div>
+      <span class="n">Dr. João Baptista Rossi</span>
+      <span class="c">CRM 91452/SP</span>
+      <p class="area">Laudos, quesitos e acompanhamento de perícias<br>São Paulo e todo o Brasil</p>
+      <span class="btn">WhatsApp no link da bio</span>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+</div>
+<script>
+  // Modo render: carousel.html?render#N mostra só o slide N (0-based), em 1080x1350.
+  if (location.search.indexOf('render') > -1) {
+    document.body.classList.add('render');
+    var n = parseInt((location.hash || '#0').slice(1), 10);
+    document.querySelectorAll('.slide').forEach(function (s, i) { if (i !== n) s.remove(); });
+  }
+</script>
+</body>
+</html>

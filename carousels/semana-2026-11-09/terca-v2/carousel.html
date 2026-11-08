@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Carrossel JBR · Terça 10/11 · v2</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+  :root {
+    --navy: #1C3E5A; --navy-deep: #142D42; --soft: #DBE2E6; --paper: #FFFFFF;
+    --muted: #5A7184; --light-ink: #CBDBE6; --kicker-dark: #AFC9DA; --kicker-light: #4E7693;
+    --display: "Playfair Display", Georgia, serif;
+    --body: "Inter", "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #e9edf0; font-family: var(--body); }
+  .deck { display: flex; flex-wrap: wrap; gap: 40px; padding: 40px; }
+  .slide { position: relative; width: 1080px; height: 1350px; overflow: hidden; flex: none; }
+
+  /* ---------- chrome ---------- */
+  .top { position: absolute; top: 72px; left: 90px; right: 90px; display: flex; align-items: center; justify-content: space-between; z-index: 3; }
+  .id { display: flex; align-items: center; gap: 22px; }
+  .id img { height: 64px; width: auto; display: block; }
+  .id .who { display: flex; flex-direction: column; gap: 4px; }
+  .id .name { font-size: 21px; font-weight: 600; letter-spacing: 0.02em; }
+  .id .crm { font-size: 16px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.7; }
+  .count { font-size: 18px; font-weight: 600; letter-spacing: 0.18em; font-variant-numeric: tabular-nums; opacity: 0.72; }
+  .handle { position: absolute; left: 90px; bottom: 64px; font-size: 19px; font-weight: 500; z-index: 3; }
+  .kicker { font-size: 18px; font-weight: 800; letter-spacing: 0.3em; text-transform: uppercase; }
+
+  /* ---------- capa: foto em moldura sobre fundo claro ---------- */
+  .cover { background: var(--paper); color: var(--navy); }
+  .cover .frame { position: absolute; left: 70px; right: 70px; top: 180px; height: 640px; border-radius: 8px; overflow: hidden;
+    background: #DCDFE3 url("../../../../brand/assets/photos/joao-1.png") center 12% / cover no-repeat; }
+  .cover .frame::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(28,62,90,0) 60%, rgba(28,62,90,0.18) 100%); }
+  .cover .text { position: absolute; left: 90px; right: 90px; top: 880px; display: flex; flex-direction: column; gap: 20px; }
+  .cover .kicker { color: var(--kicker-light); }
+  .cover h1 { font-family: var(--display); font-weight: 500; font-size: 88px; line-height: 1.0; letter-spacing: -0.015em; margin: 0; }
+  .cover .sub { font-size: 29px; line-height: 1.4; margin: 0; color: var(--muted); }
+  .cover .handle { color: var(--muted); }
+
+  /* ---------- cards ---------- */
+  .step { background: var(--navy); color: #F2F6F8; }
+  .card { position: absolute; left: 70px; right: 70px; top: 200px; bottom: 150px; background: var(--paper); color: var(--navy);
+    border-radius: 8px; padding: 84px 80px; display: flex; flex-direction: column; justify-content: center; gap: 34px; }
+  .card .num { font-family: var(--display); font-size: 150px; line-height: 0.8; color: var(--navy); opacity: 0.18; letter-spacing: -0.03em; }
+  .card .kicker { color: var(--kicker-light); }
+  .card h2 { font-family: var(--display); font-weight: 500; font-size: 66px; line-height: 1.08; letter-spacing: -0.012em; margin: 0; }
+  .card .hl { background: linear-gradient(transparent 58%, var(--soft) 58%); padding: 0 4px; }
+  .card .comment { display: flex; gap: 30px; align-items: stretch; }
+  .card .comment .vr { width: 3px; background: var(--navy); opacity: 0.35; flex: none; }
+  .card .comment p { font-size: 29px; line-height: 1.55; color: var(--muted); margin: 0; }
+  .card .example { font-size: 26px; line-height: 1.5; color: var(--navy); background: #F2F5F7; border-radius: 6px; padding: 22px 26px; margin: 0; }
+  .card .example b { font-weight: 700; }
+  .step .handle { color: var(--kicker-dark); }
+
+  /* ---------- citação: foto à direita fundindo no azul ---------- */
+  .quote { background: var(--navy); color: #F2F6F8; }
+  .quote .photo { position: absolute; top: 0; bottom: 0; right: -200px; width: 720px;
+    background: url("../../../../brand/assets/photos/joao-2.png") center 20% / cover no-repeat; }
+  .quote .fade { position: absolute; inset: 0; background:
+      linear-gradient(rgba(28,62,90,0.35), rgba(28,62,90,0.35)),
+      linear-gradient(90deg, #1C3E5A 0%, #1C3E5A 46%, rgba(28,62,90,0.7) 60%, rgba(28,62,90,0) 82%),
+      linear-gradient(0deg, #1C3E5A 0%, rgba(28,62,90,0) 30%); }
+  .quote .body { position: absolute; left: 90px; top: 0; bottom: 0; width: 540px; display: flex; flex-direction: column; justify-content: center; gap: 34px; z-index: 2; }
+  .quote .mark { font-family: var(--display); font-size: 170px; line-height: 0.5; height: 70px; opacity: 0.25; }
+  .quote blockquote { margin: 0; font-family: var(--display); font-weight: 500; font-size: 66px; line-height: 1.12; letter-spacing: -0.012em; }
+  .quote .rule { width: 76px; height: 3px; background: #F2F6F8; opacity: 0.5; }
+  .quote .sig { display: flex; flex-direction: column; gap: 6px; }
+  .quote .sig .n { font-size: 24px; font-weight: 600; }
+  .quote .sig .c { font-size: 16px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--kicker-dark); }
+  .quote .handle { color: var(--kicker-dark); }
+
+  /* ---------- encerramento com logo oficial ---------- */
+  .close { background: var(--paper); color: var(--navy); }
+  .close .inner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 120px; }
+  .close .logo { width: 560px; height: auto; display: block; }
+  .close .line { width: 120px; height: 2px; background: var(--soft); margin: 64px 0 52px; }
+  .close .n { font-family: var(--display); font-size: 46px; line-height: 1.1; }
+  .close .c { margin-top: 14px; font-size: 18px; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted); }
+  .close .area { margin-top: 30px; font-size: 25px; line-height: 1.5; color: var(--muted); }
+  .close .btn { margin-top: 52px; background: var(--navy); color: #fff; font-size: 19px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 20px 36px; border-radius: 4px; }
+  .close .handle { left: 0; right: 0; text-align: center; color: var(--muted); }
+  .close .count { position: absolute; top: 72px; right: 90px; color: var(--navy); }
+
+  body.render { background: #fff; }
+  body.render .deck { padding: 0; gap: 0; }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- 01 · CAPA -->
+  <section class="slide cover">
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-mark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+      <span class="count">01 / 08</span>
+    </div>
+    <div class="frame"></div>
+    <div class="text">
+      <span class="kicker">Prova técnica</span>
+      <h1>O que faz um quesito ser bom?</h1>
+      <p class="sub">Para o advogado que não quer depender da sorte do laudo.</p>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 02 · PONTO DE PARTIDA -->
+  <section class="slide step">
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-dark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+      <span class="count">02 / 08</span>
+    </div>
+    <div class="card">
+      <span class="kicker">O ponto de partida</span>
+      <h2>Quesito é a pergunta que o juízo manda o <span class="hl">perito responder</span></h2>
+      <div class="comment"><div class="vr"></div><p>Mal formulada, ela devolve um laudo genérico. Bem formulada, ela fecha a porta para a resposta evasiva.</p></div>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 03 -->
+  <section class="slide step">
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-dark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+      <span class="count">03 / 08</span>
+    </div>
+    <div class="card">
+      <span class="num">01</span>
+      <h2>Pergunta um <span class="hl">fato</span>, não uma opinião</h2>
+      <div class="comment"><div class="vr"></div><p>Perguntar se o autor está incapaz convida à evasão. Pergunte o que pode ser verificado no exame.</p></div>
+      <p class="example"><b>Exemplo:</b> Há limitação para esforço físico acima de dez quilos?</p>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 04 -->
+  <section class="slide step">
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-dark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+      <span class="count">04 / 08</span>
+    </div>
+    <div class="card">
+      <span class="num">02</span>
+      <h2>Cita o <span class="hl">documento</span> que já está nos autos</h2>
+      <div class="comment"><div class="vr"></div><p>Ao indicar exame, data e CID, o quesito obriga o perito a olhar a prova que a parte juntou, e não apenas o exame físico do dia.</p></div>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 05 -->
+  <section class="slide step">
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-dark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+      <span class="count">05 / 08</span>
+    </div>
+    <div class="card">
+      <span class="num">03</span>
+      <h2>Trata o <span class="hl">nexo causal</span> como etapa separada</h2>
+      <div class="comment"><div class="vr"></div><p>A doença. A atividade exercida. E a relação entre as duas. São três perguntas, nunca uma.</p></div>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 06 -->
+  <section class="slide step">
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-dark.png" alt="">
+        <div class="who"><span class="name">Dr. João Baptista Rossi</span><span class="crm">CRM 91452/SP</span></div>
+      </div>
+      <span class="count">06 / 08</span>
+    </div>
+    <div class="card">
+      <span class="num">04</span>
+      <h2>Prevê a <span class="hl">resposta incompleta</span></h2>
+      <div class="comment"><div class="vr"></div><p>Um quesito final pede fundamentação técnica para cada negativa. É o que sustenta o pedido de esclarecimentos depois.</p></div>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 07 · CITAÇÃO -->
+  <section class="slide quote">
+    <div class="photo"></div>
+    <div class="fade"></div>
+    <div class="top">
+      <div class="id">
+        <img src="../../../../brand/assets/logo-dark.png" alt="">
+        <div class="who"><span class="name">JBR Perícias Médicas</span><span class="crm">Medicina &amp; Consultoria Pericial</span></div>
+      </div>
+      <span class="count">07 / 08</span>
+    </div>
+    <div class="body">
+      <span class="mark">&ldquo;</span>
+      <blockquote>Quem escreve os quesitos decide o que o laudo pode dizer.</blockquote>
+      <div class="rule"></div>
+      <div class="sig"><span class="n">Dr. João Baptista Rossi</span><span class="c">CRM 91452/SP</span></div>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+  <!-- 08 · ENCERRAMENTO -->
+  <section class="slide close">
+    <span class="count">08 / 08</span>
+    <div class="inner">
+      <img class="logo" src="../../../../brand/assets/logo.png" alt="JB Rossi Medicina &amp; Consultoria Pericial">
+      <div class="line"></div>
+      <span class="n">Dr. João Baptista Rossi</span>
+      <span class="c">CRM 91452/SP</span>
+      <p class="area">Assistência técnica em perícias<br>trabalhistas, cíveis e previdenciárias<br>São Paulo e todo o Brasil</p>
+      <span class="btn">WhatsApp no link da bio</span>
+    </div>
+    <span class="handle">@jbrpericiasmedicas</span>
+  </section>
+
+</div>
+<script>
+  if (location.search.indexOf('render') > -1) {
+    document.body.classList.add('render');
+    var n = parseInt((location.hash || '#0').slice(1), 10);
+    document.querySelectorAll('.slide').forEach(function (s, i) { if (i !== n) s.remove(); });
+  }
+</script>
+</body>
+</html>
